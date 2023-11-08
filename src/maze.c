@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
         break;
 
     case 5:
-        start();
+        start(argv[1], (int)argv[2][0], (int)argv[3][0], argv[4]);
         break;
 
     default:

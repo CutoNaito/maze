@@ -9,8 +9,9 @@ typedef struct {
     unsigned char *cells;
 } Map;
 
-Map *create_map(FILE *fp);
+int translate_pos();
 void help();
+int start(char *direction, int R, int C, char *filename);
 void test(char *arg, char *filename);
 
 #endif
