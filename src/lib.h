@@ -11,6 +11,7 @@ typedef struct {
 
 int translate_pos();
 void help();
+void remove_occurs(char *str, char c);
 int start(char *direction, int R, int C, char *filename);
 void test(char *arg, char *filename);
 
