@@ -2,6 +2,34 @@
 #include <string.h>
 #include "lib.h"
 
+char *convert_to_bin(int n)
+{
+    /* Converts a decimal number to binary */
+    int c, d, count;
+    char *pointer;
+
+    count = 0;
+    pointer = (char *)malloc(32 + 1);
+    if (pointer == NULL) {
+        fprintf(stderr, "Error: could not allocate memory.\n");
+        return NULL;
+    }
+
+    for (c = 31; c >= 0; c--) {
+        d = n >> c;
+
+        if (d & 1)
+            *(pointer + count) = 1 + '0';
+        else
+            *(pointer + count) = 0 + '0';
+
+        count++;
+    }
+    *(pointer + count) = '\0';
+
+    return pointer;
+}
+
 void help()
 {
     printf("Usage: maze <arguments> <filename>\n");
@@ -22,6 +50,23 @@ void remove_occurs(char *str, char c)
     }
 
     *pw = '\0';
+}
+
+int rpath(Map *map, int R, int C)
+{
+    printf("%s\n", convert_to_bin(map->cells[0]));
+
+    (void)R;
+    (void)C;
+    return 0;
+}
+
+int lpath(Map *map, int R, int C)
+{
+    (void)map;
+    (void)R;
+    (void)C;
+    return 0;
 }
 
 int start(char *arg, int R, int C, char *filename)
@@ -46,6 +91,10 @@ int start(char *arg, int R, int C, char *filename)
         .rows = R_count,
         .cells = malloc(sizeof(char) * (R_count * C_count))
     };
+    if (map.cells == NULL) {
+        fprintf(stderr, "Error: could not allocate memory.\n");
+        return 1;
+    }
 
     /* Reading the maze */
     char temp[128];
@@ -66,19 +115,52 @@ int start(char *arg, int R, int C, char *filename)
     /* Removing whitespaces */
     remove_occurs((char *)map.cells, ' ');
 
-    printf("%s\n", (char *)map.cells);
-
-    (void)arg;
+    /* Eval */
+    if (strcmp(arg, "--rpath") == 0) {
+        rpath(&map, R, C);
+    } else if (strcmp(arg, "--lpath") == 0) {
+        lpath(&map, R, C);
+    } else if (strcmp(arg, "--shortest") == 0) {
+        return 0;
+    } else {
+        fprintf(stderr, "Invalid argument, use 'maze --help' to get help.");
+        return 1;
+    }
     (void)R;
     (void)C;
+
+    if (map.cells != NULL)
+        free(map.cells);
 
     return 0;
 }
 
-void test(char *arg, char *filename)
+int test(char *filename)
 {
-    (void)arg;
-    (void)filename;
+    FILE *fp;
+    fp = fopen(filename, "r");
+    if (fp == NULL) {
+        fprintf(stderr, "Error: could not open file: '%s'\n", filename);
+        return 0;
+    }
 
-    return;
+    char RC_count[4];
+
+    fgets(RC_count, 4, fp);
+    int R_count = RC_count[0] - 0x30;
+    int C_count = (RC_count[2] - 0x30) + (RC_count[2] - 0x30);
+
+    char buf[128];
+    int i = 0;
+    while (fgets(buf, 128, fp) != NULL) {
+        if (buf[0] != '\n')
+            i++;
+    }
+
+    if (R_count != i || (int)strlen(buf) != C_count) {
+        printf("Specified file is invalid.\n");
+        return 0;
+    }
+
+    return 1;
 }

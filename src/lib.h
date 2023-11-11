@@ -9,10 +9,13 @@ typedef struct {
     unsigned char *cells;
 } Map;
 
-int translate_pos();
+char *convert_to_bin(int n);
 void help();
 void remove_occurs(char *str, char c);
+int rpath(Map *map, int R, int C);
+int lpath(Map *map, int R, int C);
 int start(char *direction, int R, int C, char *filename);
-void test(char *arg, char *filename);
+int test(char *filename);
+int translate_pos();
 
 #endif

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "lib.h"
@@ -20,7 +21,15 @@ int main(int argc, char* argv[])
         break;
 
     case 3:
-        test(argv[1], argv[2]);
+        if (strcmp(argv[1], "--test") == 0) {
+            if (test(argv[2])) {
+                printf("Specified file is valid.\n");
+            }
+        } else {
+            fprintf(stderr, "Invalid argument, use 'maze --help' to get help.\n");
+            return 1;
+        }
+
         break;
 
     case 5:
