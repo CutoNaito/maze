@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "algos.h"
 #include "lib.h"
 
 char *convert_to_bin(int n)
@@ -52,22 +53,6 @@ void remove_occurs(char *str, char c)
     *pw = '\0';
 }
 
-int rpath(Map *map, int R, int C)
-{
-    printf("%s\n", convert_to_bin(map->cells[0]));
-
-    (void)R;
-    (void)C;
-    return 0;
-}
-
-int lpath(Map *map, int R, int C)
-{
-    (void)map;
-    (void)R;
-    (void)C;
-    return 0;
-}
 
 int start(char *arg, int R, int C, char *filename)
 {
