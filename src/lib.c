@@ -31,6 +31,32 @@ char *convert_to_bin(int n)
     return pointer;
 }
 
+Cell *convert_to_cell(int n)
+{
+    /* Converts a binary string to a Cell structure */
+    Cell *cell = malloc(sizeof(Cell));
+    if (cell == NULL) {
+        fprintf(stderr, "Error: could not allocate memory.\n");
+        return NULL;
+    }
+
+    char *bin = convert_to_bin(n);
+
+    cell->left = bin[strlen(bin) - 1] - 0x30;
+    cell->right = bin[strlen(bin) - 2] - 0x30;
+    cell->middle = bin[strlen(bin) - 3] - 0x30;
+
+    if (bin != NULL)
+        free(bin);
+
+    return cell;
+}
+
+int getpos(Map *map, int r, int c)
+{
+    return c + ((map->cols/2+1) * r);
+}
+
 void help()
 {
     printf("Usage: maze <arguments> <filename>\n");
@@ -39,6 +65,37 @@ void help()
     printf(" --rpath <input> <line> <col> <filename>\tFind the path to the exit using the right hand rule.\n");
     printf(" --lpath <input> <line> <col> <filename>\tFind the path to the exit. using the left hand rule.\n");
     printf(" --shortest <input> <line> <col> <filename>\tFind the shortest path to the exit.\n");
+}
+
+bool isborder(Map *map, int r, int c, int border)
+{
+    Cell *cell = convert_to_cell(map->cells[getpos(map, r, c)] - 0x30);
+    bool result = false;
+
+    switch (border) {
+    case 0: /* left */
+        if (cell->left == 1)
+            result = true;
+
+        break;
+
+    case 1: /* right */
+        if (cell->right == 1)
+            result = true;
+
+        break;
+
+    case 2: /* middle */
+        if (cell->middle == 1)
+            result = true;
+
+        break;
+    }
+
+    if (cell != NULL)
+        free(cell);
+
+    return result;
 }
 
 void remove_occurs(char *str, char c) 
@@ -76,6 +133,7 @@ int start(char *arg, int R, int C, char *filename)
         .rows = R_count,
         .cells = malloc(sizeof(char) * (R_count * C_count))
     };
+
     if (map.cells == NULL) {
         fprintf(stderr, "Error: could not allocate memory.\n");
         return 1;
@@ -111,8 +169,6 @@ int start(char *arg, int R, int C, char *filename)
         fprintf(stderr, "Invalid argument, use 'maze --help' to get help.");
         return 1;
     }
-    (void)R;
-    (void)C;
 
     if (map.cells != NULL)
         free(map.cells);

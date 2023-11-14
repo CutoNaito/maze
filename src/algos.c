@@ -5,8 +5,7 @@
 
 int rpath(Map *map, int R, int C)
 {
-    printf("%s\n", convert_to_bin(map->cells[0]));
-
+    printf("%d, %c\n", getpos(map, 2, 3), map->cells[getpos(map, 2, 3)]);
     (void)R;
     (void)C;
     return 0;
