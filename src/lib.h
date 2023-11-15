@@ -20,7 +20,6 @@ typedef struct {
 
 char *convert_to_bin(int n);
 Cell *convert_to_cell(int n);
-int getpos(Map *map, int r, int c);
 void help();
 bool isborder(Map *map, int r, int c, int border);
 void remove_occurs(char *str, char c);
