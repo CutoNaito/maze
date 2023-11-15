@@ -5,7 +5,7 @@
 
 int rpath(Map *map, int R, int C)
 {
-    printf("%d, %c\n", getpos(map, 2, 3), map->cells[getpos(map, 2, 3)]);
+    printf("%d, %c\n", GETPOS(map, 3, 3), map->cells[GETPOS(map, 3, 3)]);
     (void)R;
     (void)C;
     return 0;

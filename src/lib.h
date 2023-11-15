@@ -1,6 +1,8 @@
 #ifndef __LIB_
 #define __LIB_
 
+#define GETPOS(map, r, c) c + ((map->cols/2+1) * r)
+
 #include <stdio.h>
 #include <stdbool.h>
 

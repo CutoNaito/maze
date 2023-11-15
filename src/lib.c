@@ -52,11 +52,6 @@ Cell *convert_to_cell(int n)
     return cell;
 }
 
-int getpos(Map *map, int r, int c)
-{
-    return c + ((map->cols/2+1) * r);
-}
-
 void help()
 {
     printf("Usage: maze <arguments> <filename>\n");
@@ -69,7 +64,7 @@ void help()
 
 bool isborder(Map *map, int r, int c, int border)
 {
-    Cell *cell = convert_to_cell(map->cells[getpos(map, r, c)] - 0x30);
+    Cell *cell = convert_to_cell(map->cells[GETPOS(map, r, c)] - 0x30);
     bool result = false;
 
     switch (border) {
