@@ -2,6 +2,7 @@
 #define __LIB_
 
 #define GETPOS(map, r, c) c + ((map->cols/2+1) * r)
+#define ROW_REMAINDER(r) r % 2
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -20,6 +21,7 @@ typedef struct {
 
 char *convert_to_bin(int n);
 Cell *convert_to_cell(int n);
+int get_border(Map *map, int r, int c);
 void help();
 bool isborder(Map *map, int r, int c, int border);
 void remove_occurs(char *str, char c);
