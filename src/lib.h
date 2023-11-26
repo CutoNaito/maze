@@ -2,6 +2,7 @@
 #define __LIB_
 
 #define GETPOS(map, r, c) c + ((map->cols/2+1) * r)
+/* Todo: REVERSEPOS */
 #define ROW_REMAINDER(r) r % 2
 
 #include <stdio.h>
@@ -24,6 +25,7 @@ Cell *convert_to_cell(int n);
 int get_border(Map *map, int r, int c);
 void help();
 bool isborder(Map *map, int r, int c, int border);
+int is_exit_cell(Map *map, int r, int c);
 void remove_occurs(char *str, char c);
 int start(char *direction, int R, int C, char *filename);
 int test(char *filename);

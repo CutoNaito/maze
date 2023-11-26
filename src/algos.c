@@ -17,8 +17,40 @@ int rpath(Map *map, int R, int C)
         return 0;
     }
 
-    int steps = 0;
-    return 0;
+    int prev = start_border(map, R, C, 1);
+    int current = GETPOS(map, R, C);
+
+    /* Checking if the cell is a border */
+    if (prev == -1) {
+        return 0;
+    }
+
+    /* Checks if the cell has a bottom or top border */
+    /* 0 = top, 1 = bottom */
+    int has_bottom_border = (R + C) % 2;
+
+    while (!is_exit_cell(map, R, C)) {
+        switch (prev) {
+        case 0:
+            if (has_bottom_border) {
+                Cell *cell = convert_to_cell(current);
+                if (cell->middle == 1) {
+                    current++;
+                }
+            }
+
+            break;
+
+        case 1:
+            break;
+
+        case 2:
+            break;
+        }
+
+        int steps = 0;
+        return 0;
+    }
 }
 
 int lpath(Map *map, int R, int C)

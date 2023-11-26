@@ -93,6 +93,30 @@ bool isborder(Map *map, int r, int c, int border)
     return result;
 }
 
+int is_exit_cell(Map *map, int r, int c)
+{
+    int result = 0;
+
+    /* Checks if the cell is an exit cell */
+    Cell *cell = convert_to_cell(map->cells[GETPOS(map, r, c)] - 0x30);
+    if (r == 0 && cell->middle == 0) 
+        result = 1;
+
+    if (r == map->rows - 1 && cell->middle == 0)
+        result = 1;
+
+    if (c == 0 && cell->left == 0)
+        result = 1;
+
+    if (c == map->cols - 1 && cell->right == 0)
+        result = 1;
+
+    if (cell != NULL)
+        free(cell);
+
+    return result;
+}
+
 void remove_occurs(char *str, char c) 
 {
     /* Removes all occurences of a given character in a string */
