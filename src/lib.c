@@ -129,6 +129,32 @@ void remove_occurs(char *str, char c)
     *pw = '\0';
 }
 
+int *reverse_pos(Map *map, int pos)
+{
+    /* Reverses the position of a cell */
+    int *result = malloc(sizeof(int) * 2);
+    if (result == NULL) {
+        fprintf(stderr, "Error: could not allocate memory.\n");
+        return NULL;
+    }
+
+    int r = 0;
+    int c = 0;
+
+    for (int i = 0; i < map->rows; i++) {
+        for (int j = 0; j < map->cols; j++) {
+            if (GETPOS(map, i, j) == pos) {
+                r = i;
+                c = j;
+            }
+        }
+    }
+
+    result[0] = r;
+    result[1] = c;
+
+    return result;
+}
 
 int start(char *arg, int R, int C, char *filename)
 {

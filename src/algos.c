@@ -5,6 +5,10 @@
 
 int rpath(Map *map, int R, int C)
 {
+    /* Correcting values to actual numbers (??) */
+    R = R - 1 - 0x30;
+    C = C - 1 - 0x30;
+
     /* Checking if the coordinates are valid */
     if (R < 0 || C < 0 || R >= map->rows || C >= map->cols) {
         fprintf(stderr, "Error: Invalid start coordinates.\n");
@@ -12,7 +16,7 @@ int rpath(Map *map, int R, int C)
     }
 
     /* Checking if the cell is a wall */
-    if (R != 1 || C != 1 && R != map->rows - 1 || C != map->cols - 1) {
+    if ((R != 1 || C != 1) && (R != map->rows - 1 || C != map->cols - 1)) {
         fprintf(stderr, "Error: Start coordinates are not a wall.\n");
         return 0;
     }
@@ -29,7 +33,7 @@ int rpath(Map *map, int R, int C)
     /* 0 = top, 1 = bottom */
     int has_bottom_border = (R + C) % 2;
 
-    while (!is_exit_cell(map, R, C)) {
+    while (!is_exit_cell(map, reverse_pos(map, current)[0], reverse_pos(map, current)[1])) {
         switch (prev) {
         case 0:
             if (has_bottom_border) {
@@ -49,15 +53,21 @@ int rpath(Map *map, int R, int C)
         }
 
         int steps = 0;
+        (void)steps;
         return 0;
     }
+
+    return 0;
 }
 
 int lpath(Map *map, int R, int C)
 {
-    (void)map;
-    (void)R;
-    (void)C;
+    /* Correcting values to actual numbers (??) */
+    R = R - 1 - 0x30;
+    C = C - 1 - 0x30;
+
+    printf("%d\n", GETPOS(map, R, C));
+    printf("%d %d\n", reverse_pos(map, GETPOS(map, R, C))[0], reverse_pos(map, GETPOS(map, R, C))[1]);
     return 0;
 }
 
@@ -122,4 +132,6 @@ int start_border(Map *map, int r, int c, int leftright)
             return -1;
         }
     }
+
+    return 0;
 }
