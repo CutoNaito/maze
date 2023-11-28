@@ -36,7 +36,7 @@ int rpath(Map *map, int R, int C)
     int has_bottom_border = (R + C) % 2;
 
     /* TODO: change to do while i dont think this is gonna work */
-    while (!is_exit_cell(map, reverse_pos(map, current)[0], reverse_pos(map, current)[1])) {
+    do {
         switch (prev) {
         case 0:
             if (has_bottom_border) {
@@ -182,9 +182,7 @@ int rpath(Map *map, int R, int C)
 
             break;
         }
-
-        return 0;
-    }
+    } while (!is_exit_cell(map, reverse_pos(map, current)[0], reverse_pos(map, current)[1]));
 
     return 0;
 }
