@@ -139,10 +139,42 @@ int rpath(Map *map, int R, int C)
             if (has_bottom_border) {
                 Cell *cell = convert_to_cell(current);
 
+                /* Right border closed, left border open */
+                if (cell->right == 1 && cell->left == 0) {
+                    LEFT(current);
+                    prev = 1;
+
+                /* Right border open */
+                } else if (cell->right == 0) {
+                    RIGHT(current);
+                    prev = 0;
+
+                /* Left border closed, bottom border open */
+                } else if (cell->left == 1 && cell->middle == 0) {
+                    DOWN(current, map);
+                    prev = 2;
+                }
+
                 if (cell != NULL)
                     free(cell);
             } else {
                 Cell *cell = convert_to_cell(current);
+                
+                /* Left border closed, right border open */
+                if (cell->left == 1 && cell->right == 0) {
+                    RIGHT(current);
+                    prev = 0;
+
+                /* Left border open */
+                } else if (cell->left == 0) {
+                    LEFT(current);
+                    prev = 1;
+
+                /* Right border closed && Top border open */
+                } else if (cell->right == 1 && cell->middle == 0) {
+                    UP(current, map);
+                    prev = 2;
+                }
 
                 if (cell != NULL)
                     free(cell);
