@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "algos.h"
 #include "lib.h"
 
 int rpath(Map *map, int R, int C)
 {
-    /* Correcting values to actual numbers (??) */
+    /* Correcting values to actual numbers */
     R = R - 1 - 0x30;
     C = C - 1 - 0x30;
 
@@ -21,6 +22,7 @@ int rpath(Map *map, int R, int C)
         return 0;
     }
 
+    /* Initial position */
     int prev = start_border(map, R, C, 1);
     int current = GETPOS(map, R, C);
 
@@ -33,27 +35,122 @@ int rpath(Map *map, int R, int C)
     /* 0 = top, 1 = bottom */
     int has_bottom_border = (R + C) % 2;
 
+    /* TODO: change to do while i dont think this is gonna work */
     while (!is_exit_cell(map, reverse_pos(map, current)[0], reverse_pos(map, current)[1])) {
         switch (prev) {
         case 0:
             if (has_bottom_border) {
                 Cell *cell = convert_to_cell(current);
-                if (cell->middle == 1) {
-                    current++;
+
+                /* Bottom border closed, right border open */
+                if (cell->middle == 1 && cell->right == 0) {
+                    RIGHT(current);
+                    prev = 0;
+
+                /* Bottom border open */
+                } else if (cell->middle == 0) {
+                    DOWN(current, map);
+                    prev = 2;
+
+                /* Right border closed, left border open */
+                } else if (cell->right == 1 && cell->left == 0) {
+                    LEFT(current);
+                    prev = 1;
                 }
+
+                if (cell != NULL)
+                    free(cell);
+            } else {
+                Cell *cell = convert_to_cell(current);
+
+                /* Top border open, right border closed */
+                if (cell->right == 1 && cell->middle == 0) {
+                    UP(current, map);
+                    prev = 2;
+                }
+
+                /* Right border open */
+                else if (cell->right == 0) {
+                    RIGHT(current);
+                    prev = 0;
+                }
+
+                /* Top border closed, left border open */
+                else if (cell->middle == 1 && cell->left == 0) {
+                    LEFT(current);
+                    prev = 1;
+                }
+
+                if (cell != NULL)
+                    free(cell);
             }
 
             break;
 
         case 1:
+            if (has_bottom_border) {
+                Cell *cell = convert_to_cell(current);
+
+                /* Left border closed, bottom border open */
+                if (cell->left == 1 && cell->middle == 0) {
+                    DOWN(current, map);
+                    prev = 2;
+
+                /* Left border open */
+                } else if (cell->left == 0) {
+                    LEFT(current);
+                    prev = 1;
+
+                /* Bottom border closed, right border open */
+                } else if (cell->middle == 1 && cell->right == 0) {
+                    RIGHT(current);
+                    prev = 0;
+                }
+
+                if (cell != NULL)
+                    free(cell);
+            
+            } else {
+                Cell *cell = convert_to_cell(current);
+
+                /* Top border closed, left border open */
+                if (cell->middle == 1 && cell->left == 0) {
+                    LEFT(current);
+                    prev = 1;
+
+                /* Top border open */
+                } else if (cell->middle == 0) {
+                    UP(current, map);
+                    prev = 2;
+
+                /* Left border closed, right border open */
+                } else if (cell->left == 1 && cell->right == 0) {
+                    RIGHT(current);
+                    prev = 0;
+                }
+
+                if (cell != NULL)
+                    free(cell);
+            }
+
             break;
 
         case 2:
+            if (has_bottom_border) {
+                Cell *cell = convert_to_cell(current);
+
+                if (cell != NULL)
+                    free(cell);
+            } else {
+                Cell *cell = convert_to_cell(current);
+
+                if (cell != NULL)
+                    free(cell);
+            }
+
             break;
         }
 
-        int steps = 0;
-        (void)steps;
         return 0;
     }
 
