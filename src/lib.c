@@ -99,16 +99,16 @@ int is_exit_cell(Map *map, int r, int c)
 
     /* Checks if the cell is an exit cell */
     Cell *cell = convert_to_cell(map->cells[GETPOS(map, r, c)] - 0x30);
-    if (r == 0 && cell->middle == 0) 
+    if (r == 0 && cell->middle == 0 && (r + c) % 2 == 0) 
         result = 1;
 
-    if (r == map->rows - 1 && cell->middle == 0)
+    if (r == map->rows - 1 && cell->middle == 0 && (r + c) % 2 == 0)
         result = 1;
 
     if (c == 0 && cell->left == 0)
         result = 1;
 
-    if (c == map->cols - 1 && cell->right == 0)
+    if (c == map->cols/2 - 1 && cell->right == 0)
         result = 1;
 
     if (cell != NULL)
