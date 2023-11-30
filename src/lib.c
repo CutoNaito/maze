@@ -102,7 +102,7 @@ int is_exit_cell(Map *map, int r, int c)
     if (r == 0 && cell->middle == 0 && (r + c) % 2 == 0) 
         result = 1;
 
-    if (r == map->rows - 1 && cell->middle == 0 && (r + c) % 2 == 0)
+    if (r == map->rows - 1 && cell->middle == 0 && (r + c) % 2 == 1)
         result = 1;
 
     if (c == 0 && cell->left == 0)

@@ -34,7 +34,7 @@ int rpath(Map *map, int R, int C)
     do {
         /* checks if the cell has a bottom or top border */
         /* 0 = top, 1 = bottom */
-        int has_bottom_border = (reverse_pos(map, current)[0] + reverse_pos(map, current)[1]) % 2;
+        int has_bottom_border = ((reverse_pos(map, current)[0]) + (reverse_pos(map, current)[1])) % 2;
         switch (prev) {
         case 0:
             if (has_bottom_border) {
@@ -215,7 +215,8 @@ int lpath(Map *map, int R, int C)
     do {
         /* checks if the cell has a bottom or top border */
         /* 0 = top, 1 = bottom */
-        int has_bottom_border = (reverse_pos(map, current)[0] + reverse_pos(map, current)[1]) % 2;
+        int has_bottom_border = ((reverse_pos(map, current)[0]) + (reverse_pos(map, current)[1])) % 2;
+        printf("%d, %d\n", reverse_pos(map, current)[0] + 1, reverse_pos(map, current)[1] + 1);
         switch (prev) {
             case 0:
                 if (has_bottom_border) {
@@ -224,19 +225,16 @@ int lpath(Map *map, int R, int C)
                     /* Bottom border open, right border closed */
                     if (cell->middle == 0 && cell->right == 1) {
                         DOWN(current, map);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 2;
 
                     /* Right border open */
                     } else if (cell->right == 0) {
                         RIGHT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 0;
 
                     /* Bottom border closed, left border open */
                     } else if (cell->middle == 1 && cell->left == 0) {
                         LEFT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 1;
                     }
 
@@ -248,21 +246,18 @@ int lpath(Map *map, int R, int C)
                     /* Top border closed, right border open */
                     if (cell->right == 0 && cell->middle == 1) {
                         RIGHT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 0;
                     }
 
                     /* Top border open */
                     else if (cell->middle == 0) {
                         UP(current, map);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 2;
                     }
 
                     /* Right border closed, left border open */
                     else if (cell->right == 1 && cell->left == 0) {
                         LEFT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 1;
                     }
 
@@ -279,19 +274,16 @@ int lpath(Map *map, int R, int C)
                     /* Left border closed, bottom border open */
                     if (cell->left == 1 && cell->middle == 0) {
                         DOWN(current, map);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 2;
 
                         /* Left border open */
                     } else if (cell->left == 0) {
                         LEFT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 1;
 
                         /* Bottom border closed, right border open */
                     } else if (cell->middle == 1 && cell->right == 0) {
                         RIGHT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 0;
                     }
 
@@ -304,19 +296,16 @@ int lpath(Map *map, int R, int C)
                     /* Top border closed, left border open */
                     if (cell->middle == 1 && cell->left == 0) {
                         LEFT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 1;
 
                         /* Top border open */
                     } else if (cell->middle == 0) {
                         UP(current, map);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 2;
 
                         /* Left border closed, right border open */
                     } else if (cell->left == 1 && cell->right == 0) {
                         RIGHT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 0;
                     }
 
@@ -333,19 +322,16 @@ int lpath(Map *map, int R, int C)
                     /* Right border closed, left border open */
                     if (cell->right == 0 && cell->left == 1) {
                         RIGHT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 0;
 
                         /* Right border open */
                     } else if (cell->left == 0) {
                         LEFT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 1;
 
                         /* Left border closed, bottom border open */
                     } else if (cell->right == 1 && cell->middle == 0) {
                         DOWN(current, map);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 2;
                     }
 
@@ -357,19 +343,16 @@ int lpath(Map *map, int R, int C)
                     /* Left border closed, right border open */
                     if (cell->left == 0 && cell->right == 1) {
                         LEFT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 1;
 
                         /* Left border open */
                     } else if (cell->right == 0) {
                         RIGHT(current);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 0;
 
                         /* Right border closed && Top border open */
                     } else if (cell->left == 1 && cell->middle == 0) {
                         UP(current, map);
-                        printf("%d, %d\n", reverse_pos(map, current)[0], reverse_pos(map, current)[1]);
                         prev = 2;
                     }
 
