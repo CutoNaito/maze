@@ -244,7 +244,7 @@ int test(char *filename)
     }
 
     if (R_count != i || (int)strlen(buf) != C_count) {
-        printf("Specified file is invalid.\n");
+        printf("Invalid\n");
         return 0;
     }
 

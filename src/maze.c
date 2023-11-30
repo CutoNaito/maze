@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     case 3:
         if (strcmp(argv[1], "--test") == 0) {
             if (test(argv[2])) {
-                printf("Specified file is valid.\n");
+                printf("Valid\n");
             }
         } else {
             fprintf(stderr, "Invalid argument, use 'maze --help' to get help.\n");
