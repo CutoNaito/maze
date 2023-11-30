@@ -223,6 +223,7 @@ int start(char *arg, int R, int C, char *filename)
 
 int test(char *filename)
 {
+    /* Tests, if given file contains a valid maze */
     FILE *fp;
     fp = fopen(filename, "r");
     if (fp == NULL) {

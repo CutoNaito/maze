@@ -31,6 +31,7 @@ int rpath(Map *map, int R, int C)
         /* checks if the cell has a bottom or top border */
         /* 0 = top, 1 = bottom */
         int has_bottom_border = ((reverse_pos(map, current)[0]) + (reverse_pos(map, current)[1])) % 2;
+
         printf("%d,%d\n", reverse_pos(map, current)[0] + 1, reverse_pos(map, current)[1] + 1);
         steps++;
 
@@ -167,7 +168,7 @@ int rpath(Map *map, int R, int C)
                     LEFT(current);
                     prev = 1;
 
-                /* Right border closed && Top border open */
+                /* Right border closed, top border open */
                 } else if (cell->right == 1 && cell->middle == 0) {
                     UP(current, map);
                     prev = 2;
@@ -271,17 +272,17 @@ int lpath(Map *map, int R, int C)
                 if (has_bottom_border) {
                     Cell *cell = convert_to_cell(map->cells[current] - 0x30);
 
-                    /* Left border closed, bottom border open */
+                    /* Left border open, bottom border closed */
                     if (cell->left == 0 && cell->middle == 1) {
                         LEFT(current);
                         prev = 1;
 
-                        /* Left border open */
+                    /* Bottom border open */
                     } else if (cell->middle == 0) {
                         DOWN(current, map);
                         prev = 2;
 
-                        /* Bottom border closed, right border open */
+                    /* Left border closed, right border open */
                     } else if (cell->left == 1 && cell->right == 0) {
                         RIGHT(current);
                         prev = 0;
@@ -298,12 +299,12 @@ int lpath(Map *map, int R, int C)
                         LEFT(current);
                         prev = 1;
 
-                        /* Top border open */
+                    /* Top border open */
                     } else if (cell->middle == 0) {
                         UP(current, map);
                         prev = 2;
 
-                        /* Left border closed, right border open */
+                    /* Left border closed, right border open */
                     } else if (cell->left == 1 && cell->right == 0) {
                         RIGHT(current);
                         prev = 0;
@@ -319,17 +320,17 @@ int lpath(Map *map, int R, int C)
                 if (has_bottom_border) {
                     Cell *cell = convert_to_cell(map->cells[current]);
 
-                    /* Right border closed, left border open */
+                    /* Right border open, left border closed */
                     if (cell->right == 0 && cell->left == 1) {
                         RIGHT(current);
                         prev = 0;
 
-                        /* Right border open */
+                    /* Left border open */
                     } else if (cell->left == 0) {
                         LEFT(current);
                         prev = 1;
 
-                        /* Left border closed, bottom border open */
+                    /* Right border closed, bottom border open */
                     } else if (cell->right == 1 && cell->middle == 0) {
                         DOWN(current, map);
                         prev = 2;
@@ -340,17 +341,17 @@ int lpath(Map *map, int R, int C)
                 } else {
                     Cell *cell = convert_to_cell(map->cells[current]);
 
-                    /* Left border closed, right border open */
+                    /* Left border open, right border closed */
                     if (cell->left == 0 && cell->right == 1) {
                         LEFT(current);
                         prev = 1;
 
-                        /* Left border open */
+                    /* Right border open */
                     } else if (cell->right == 0) {
                         RIGHT(current);
                         prev = 0;
 
-                        /* Right border closed && Top border open */
+                    /* Left border closed && Top border open */
                     } else if (cell->left == 1 && cell->middle == 0) {
                         UP(current, map);
                         prev = 2;
