@@ -373,6 +373,7 @@ int lpath(Map *map, int R, int C)
 
 int start_border(Map *map, int r, int c)
 {
+    /* Checks entrance */
     if (c == 0)
         return 0;
     else if (c == map->cols/2 - 1)
@@ -389,6 +390,7 @@ int start_border(Map *map, int r, int c)
 
 int is_out(Map *map, int r, int c)
 {
+    /* Checks if cell is out of the maze borders */
     if (r < 0 || c < 0 || r > map->rows - 1 || c > map->cols/2 - 1) {
         return 1;
     }
