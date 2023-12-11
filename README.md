@@ -2,6 +2,7 @@ this project sucks ass
 
 # Maze
 #### A triangular maze solver.
+cba typing out the whole assignment
 
 ## Installation:
 ```
